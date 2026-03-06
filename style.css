@@ -1,0 +1,235 @@
+/* --- 1. THEME VARIABLES (Merged & Organized) --- */
+:root {
+    --bg-main: #0b0e14;
+    --bg-card: #151921;
+    --bg-sidebar: #10141d;
+    --accent: #7aa2f7;
+    --text-main: #ffffff;
+    --border: #24283b;
+    --shadow: rgba(0, 0, 0, 0.5);
+}
+
+body.light-mode {
+    --bg-main: #f0f2f5;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    --accent: #2563eb;
+    --text-main: #1e293b;
+    --border: #d1d5db;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* --- 2. GLOBAL STYLES --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background: var(--bg-main);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* --- 3. SIDEBAR STYLING --- */
+.sidebar {
+    width: 250px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    padding: 2rem 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-title {
+    color: var(--accent);
+    padding: 0 2rem 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.sidebar ul {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.sidebar ul li a {
+    padding: 1rem 2rem;
+    display: block;
+    color: var(--text-main);
+    text-decoration: none;
+    transition: 0.2s;
+    border-left: 3px solid transparent;
+    font-size: 0.9rem;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background: rgba(122, 162, 247, 0.1);
+    border-left-color: var(--accent);
+    color: var(--accent);
+}
+
+/* --- 4. THEME TOGGLE BUTTON --- */
+.theme-toggle {
+    margin: 0 2rem 1rem;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: rgba(122, 162, 247, 0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* --- 5. CONTENT & PAGE LAYOUTS --- */
+.content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.page {
+    display: none;
+    width: 100%;
+}
+
+.page.centered-page.active-page {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 85vh;
+}
+
+.page.full-width-page.active-page {
+    display: block !important;
+}
+
+.glass-card {
+    background: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 30px var(--shadow);
+}
+
+/* --- 6. FORM ELEMENTS --- */
+label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--bg-main);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--accent);
+}
+
+/* Icon visibility for dark/light */
+input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+body.light-mode input::-webkit-calendar-picker-indicator {
+    filter: invert(0);
+}
+
+.btn-save {
+    background: var(--accent);
+    color: #ffffff; /* Contrast text for blue button */
+    border: none;
+    padding: 1rem;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    transition: 0.2s;
+    margin-top: 1rem;
+}
+
+body.light-mode .btn-save {
+    color: #ffffff;
+}
+
+/* --- 7. TABLE STYLING (The Visibility Fix) --- */
+.table-container {
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: rgba(122, 162, 247, 0.05);
+    padding: 1rem;
+    text-align: left;
+    color: var(--accent);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--border);
+}
+
+td {
+    padding: 1.1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.95rem;
+    color: var(--text-main); /* Dynamically changes with theme */
+}
+
+/* Row Hover for better usability */
+tr:hover td {
+    background: rgba(122, 162, 247, 0.03);
+}
+
+/* --- 8. PRINT LOGIC --- */
+@media print {
+    .no-print { display: none !important; }
+    body { background: white; color: black; }
+    .content { margin: 0; padding: 0; display: block; }
+    .print-table { width: 100%; border-collapse: collapse; border: 1px solid black; }
+    .print-table th, .print-table td { border: 1px solid black; padding: 8px; text-align: center; color: black; }
+}

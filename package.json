@@ -1,0 +1,43 @@
+{
+  "name": "cctv-correction-pro",
+  "version": "1.0.0",
+  "description": "Professional Attendance Correction System",
+  "author": "Mian Werad",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "com.trustsafe.cctv",
+    "productName": "CCTV Correction Pro",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CCTV Correction Pro",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "uninstallDisplayName": "CCTV Correction Pro (TrustSafe Services)"
+    },
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    }
+  },
+  "dependencies": {
+    "sqlite3": "5.1.6"
+  },
+  "devDependencies": {
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1"
+  }
+}

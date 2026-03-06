@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CCTV Correction Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="sidebar no-print">
+        <div class="sidebar-title">CCTV Attendance App</div>
+        
+        <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
+            <i id="theme-icon" class="fas fa-moon"></i> <span>Toggle Theme</span>
+        </button>
+
+        <ul>
+            <li><a href="#" id="link-add" class="active" onclick="showPage('add-page', 'link-add')">Add Entry</a></li>
+            <li><a href="#" id="link-manage" onclick="showPage('manage-entries', 'link-manage'); loadEntries();">Correction Records</a></li>
+            <li><a href="#" id="link-print" onclick="showPage('print-page', 'link-print'); initPrint();">Print Records</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section id="add-page" class="page centered-page">
+            <div class="page-header">
+                <h1>Add New CCTV Correction</h1>
+            </div>
+            <div class="glass-card">
+                <form id="entryForm">
+                    <div class="form-group">
+                        <label>Employee Code</label>
+                        <input type="number" id="emp_code" placeholder="Enter Oracle Code" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Date</label>
+                        <input type="date" id="entry_date" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="flex:1">
+                            <label>In Time</label>
+                            <input type="time" id="in_time">
+                        </div>
+                        <div class="form-group" style="flex:1">
+                            <label>Out Time</label>
+                            <input type="time" id="out_time">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <select id="remarks">
+                            <option value="OK">OK</option>
+                            <option value="Not Found">Not Found</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-save">Save Entry</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="manage-entries" class="page full-width-page" style="display:none;">
+            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Correction Records</h1>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <input type="text" id="log-search" placeholder="Search SAP Code..." onkeyup="renderLogTable()">
+
+                    <select id="log-sort" onchange="renderLogTable()">
+                        <option value="desc">Newest First</option>
+                        <option value="asc">Oldest First</option>
+                    </select>
+
+                    <button onclick="resetDatabase()"
+                        style="background:#f77a7a; color:#0b0e14; border:none; padding: 10px 15px; border-radius:8px; font-weight:bold; cursor:pointer;">
+                        Reset
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sr.</th>
+                            <th>Code</th>
+                            <th>Date</th>
+                            <th>In</th>
+                            <th>Out</th>
+                            <th>Remarks</th>
+                            <th class="no-print">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="manageTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="print-page" class="page full-width-page" style="display:none;">
+            <div class="page-header no-print"
+                style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div style="display: flex; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="date" id="print-start-date" onchange="filterPrint()">
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="date" id="print-end-date" onchange="filterPrint()">
+                    </div>
+                </div>
+                <button onclick="window.print()" class="btn-save" style="width: auto; padding: 0.6rem 2rem;">Print
+                    PDF</button>
+            </div>
+            <div id="printable-area">
+                <div class="print-only-header" style="text-align:center; color:black">
+                    <h2>ATTENDANCE CORRECTION RECORD</h2>
+                    <p id="print-date-display"></p>
+                </div>
+                <table class="print-table">
+                    <thead>
+                        <tr>
+                            <th>Sr.</th>
+                            <th>Code</th>
+                            <th>Date</th>
+                            <th>IN</th>
+                            <th>OUT</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="printTableBody"></tbody>
+                </table>
+                <div class="print-footer" style="margin-top:50px; text-align:right; color:black">
+                    <p>__________________________</p>
+                    <p>Authorized Signature</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>
